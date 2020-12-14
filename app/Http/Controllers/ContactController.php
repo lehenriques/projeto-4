@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\{Contact, TelephoneType};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
@@ -24,7 +25,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::latest()->paginate(5);
+        $contacts = Contact::whereUserId(Auth::id())->latest()->paginate(5);
 
         return view('contact.home', compact('contacts'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -46,13 +47,6 @@ class ContactController extends Controller
 
         return redirect()->route('contact')
                         ->with('success','Usuário cadastrado com sucesso.');
-    }
-
-    public function email(Contact $contact)
-    {
-        $contacts = Contact::with('email')->first();
-
-        return view('email.home', compact('contacts'));
     }
 
     public function destroy(Contact $contact)

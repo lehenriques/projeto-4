@@ -25,9 +25,9 @@ class EmailController extends Controller
      */
     public function index(Contact $contact)
     {
-        $emails = Email::where('contact_id', $contact->id)->get();
+        $contacts = Contact::with('email')->whereId($contact->id)->first();
 
-        return view('email.home', compact('emails'));
+        return view('email.home', compact('contacts'));
     }
 
     public function create(Contact $contact)

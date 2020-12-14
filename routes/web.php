@@ -24,8 +24,8 @@ Route::get('/contacts', 'ContactController@index')->name('contact');
 Route::get('/contacts/new', 'ContactController@create')->name('contact.create');
 Route::post('/contacts', 'ContactController@store')->name('contact.store');
 Route::delete('/contacts/{contact}', 'ContactController@destroy')->name('contact.destroy');
-Route::get('/contacts/email/{contact}', 'ContactController@email')->name('contact.email');
 
+Route::get('/contacts/email/{contact}', 'EmailController@index')->name('contact.email');
 Route::delete('/contacts/email/{email}/{contact}', 'EmailController@destroy')->name('email.destroy');
 Route::get('/contacts/{contact}/email', 'EmailController@create')->name('email.create');
 Route::post('/email', 'EmailController@store')->name('email.store');
@@ -42,6 +42,5 @@ Route::post('/telephone', 'TelephonesTypesController@store')->name('type.store')
 
 
 
-// Route::get('/contacts/telephone', 'HomeController@index')->name('contact.telephone');
 
 

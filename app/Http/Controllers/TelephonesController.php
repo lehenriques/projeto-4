@@ -24,7 +24,7 @@ class TelephonesController extends Controller
      */
     public function index(Contact $contact)
     {
-        $contacts = Contact::with('telephones')->first();
+        $contacts = Contact::with('telephones')->whereId($contact->id)->first();
 
         return view('telephone.home', compact('contacts'));
     }
