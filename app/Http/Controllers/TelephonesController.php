@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\{Contact, Telephone, TelephoneType};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TelephonesController extends Controller
 {
@@ -24,7 +25,11 @@ class TelephonesController extends Controller
      */
     public function index(Contact $contact)
     {
-        $contacts = Contact::with('telephones')->whereId($contact->id)->first();
+        $contacts = Contact::with('telephones')->whereId($contact->id)->where('user_id', Auth::id())->first();
+
+        if (!$contacts) {
+            return redirect(404);
+        }
 
         return view('telephone.home', compact('contacts'));
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contact;
 use App\Email;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmailController extends Controller
 {
@@ -25,7 +26,11 @@ class EmailController extends Controller
      */
     public function index(Contact $contact)
     {
-        $contacts = Contact::with('email')->whereId($contact->id)->first();
+        $contacts = Contact::with('email')->whereId($contact->id)->where('user_id', Auth::id())->first();
+
+        if (!$contacts) {
+            return redirect(404);
+        }
 
         return view('email.home', compact('contacts'));
     }
